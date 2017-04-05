@@ -1,0 +1,46 @@
+
+apply plugin: "java"
+apply plugin: "idea"
+apply plugin: "eclipse"
+sourceCompatibility = 1.8
+version = '1.0'
+
+apply from: "$rootDir/gradle/dependencies.gradle"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile([
+        libs.commonsIO,
+        libs.commonsLang,
+        libs.httpclient,
+        libs.log4j,
+        libs.jacksonDatabind
+    ])
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.viewlift.api.APIClient'
+    }
+}
+
+//create a single Jar with all dependencies
+task fatJar(type: Jar) {
+	manifest {
+        attributes 'Implementation-Title': 'API Client Jar File',
+        	'Implementation-Version': version,
+        	'Main-Class': 'com.viewlift.api.APIClient'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+// Gradle Wrapper Settings
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.5"
+}

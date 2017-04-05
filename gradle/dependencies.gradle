@@ -1,0 +1,12 @@
+ext {
+    versions = [:]
+    libs = [:]
+}
+
+libs += [
+        commonsLang: "org.apache.commons:commons-lang3:3.4",
+        commonsIO: "commons-io:commons-io:2.4",
+        log4j: "log4j:log4j:1.2.17",
+        httpclient: "org.apache.httpcomponents:httpclient:4.5.2",
+        jacksonDatabind: "com.fasterxml.jackson.core:jackson-databind:2.8.5"
+]
