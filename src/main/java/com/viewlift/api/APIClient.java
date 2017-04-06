@@ -23,11 +23,11 @@ public class APIClient {
 	private static final Logger LOGGER = Logger.getLogger(APIClient.class);
 
 	private void testCreateSite(String apikey) throws JsonProcessingException {
-		HashMap<String, String> map = new HashMap<>();
+		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("name", "Viewlift");
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonRequest = mapper.writeValueAsString(map);
-		Map<String, String> headerParams = new HashMap<>();
+		Map<String, String> headerParams = new HashMap<String, String>();
 		headerParams.put("x-api-key", apikey);
 		headerParams.put("Content-Type", "application/json");
 		String response = processHttpPost(BASE_URL + "/content/site", jsonRequest, headerParams);
@@ -61,7 +61,9 @@ public class APIClient {
 				responseString = IOUtils.toString(response.getEntity().getContent());
 			}
 
-		} catch (IllegalStateException | IOException e) {
+		} catch (IllegalStateException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 
